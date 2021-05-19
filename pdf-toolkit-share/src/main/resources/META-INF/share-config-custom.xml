@@ -462,6 +462,14 @@
             </form>
         </forms>
     </config>
+
+	<config evaluator="string-compare" condition="WebFramework">
+		<web-framework>
+			<defaults>
+				<user-factory>webframework.factory.user.pdftoolkit</user-factory>
+			</defaults>
+		</web-framework>
+	</config>
     
 	<config evaluator="string-compare" condition="DocLibCustom">
 		<dependencies>

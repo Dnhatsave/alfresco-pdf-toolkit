@@ -7,12 +7,13 @@ public interface PDFToolkitModel
 	//namespace
 	static final String PDFTOOLKIT_MODEL_1_0_URI = "http://www.alfresco.com/model/pdftoolkit/1.0";
 	
-	//signed aspect and properties
+	//signed aspect and properties 
 	static final QName ASPECT_SIGNED = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "signed");
 	static final QName PROP_SIGNATUREDATE = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "signaturedate");
 	static final QName PROP_REASON = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "reason");
 	static final QName PROP_LOCATION = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "location");
 	static final QName PROP_SIGNEDBY = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "signedby");
+	static final QName PROP_SIGNATUREPIN = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "signaturepin");
 	
 	//encrypted aspect and properties
 	static final QName ASPECT_ENCRYPTED = QName.createQName(PDFTOOLKIT_MODEL_1_0_URI, "encrypted");

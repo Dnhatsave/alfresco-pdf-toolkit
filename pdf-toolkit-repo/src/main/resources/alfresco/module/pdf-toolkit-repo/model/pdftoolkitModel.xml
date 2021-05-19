@@ -39,6 +39,10 @@
                     <title>Reason</title>
                     <type>d:text</type>
                 </property>
+                <property name="pdft:signaturepin">
+                    <title>Pin</title>
+                    <type>d:text</type>
+                </property>
             </properties>
         </aspect>
         
