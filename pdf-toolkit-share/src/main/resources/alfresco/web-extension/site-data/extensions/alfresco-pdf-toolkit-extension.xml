@@ -2,7 +2,7 @@
 
 <extension xmlns="http://www.springframework.org/extensions/surf/extensibility">
 	<modules>
-		<module>
+		<!-- <module>
 			<id>PDF Toolkit Actions UI - Signature</id>
 			<description>Expose the signature action doclib action UI</description>
 			<version>${project.version}</version>
@@ -41,7 +41,7 @@
 					</actionGroups>
 				</config>
 			</configurations>
-		</module>
+		</module> -->
 		<module>
 			<id>PDF Toolkit Actions UI - Watermark</id>
 			<description>Expose the watermark action doclib action UI</description>
@@ -82,7 +82,7 @@
 				</config>
 			</configurations>
 		</module>
-		<module>
+		<!-- <module>
 			<id>PDF Toolkit Actions UI - Append</id>
 			<description>Expose the append action doclib action UI</description>
 			<version>${project.version}</version>
@@ -441,6 +441,6 @@
 					</actionGroups>
 				</config>
 			</configurations>
-		</module>
+		</module> -->
 	</modules>
 </extension>

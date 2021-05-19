@@ -1837,19 +1837,20 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
                 Rectangle pageSize = reader.getPageSizeWithRotation(i);
 
                 // Escrever texto verticalmente
-                // left of the page
-                x = pageSize.getLeft();
+                // right of the page
+                x = pageSize.getRight();
                 // middle of the height
                 y = (pageSize.getTop() + pageSize.getBottom()) / 2;
                 // getting the canvas covering the existing content
                 canvas = stamp.getOverContent(i);
-                // adding some lines to the left
+                // adding some lines to the right
                 ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER,
-                    new Phrase("Documento Assinado electronicamente a 14 de Maio de 2021 por Dercio Nhatsave"),
-                    x + 18, y, 90);
+                    new Phrase("Documento Assinado electronicamente por: "+ AuthenticationUtil.getRunAsUser() + " | " + new java.util.Date() ),
+                    x - 18, y, 90);
+                //recuperar o url e colocar no Doc
                 ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER,
                     new Phrase("validar: http://localhost:8080/sgd/page/site/testes/document-details"),
-                    x + 34, y, 90);
+                    x - 34, y, 90);
             }
 
             stamp.close();
@@ -1872,6 +1873,13 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 
             // delete the temp file
             file.delete();
+            
+            // Adicionar Aspecto Assinatura
+            ns.addAspect(destinationNode, PDFToolkitModel.ASPECT_SIGNED, new HashMap<QName, Serializable>());
+            ns.setProperty(destinationNode, PDFToolkitModel.PROP_SIGNATUREDATE, new java.util.Date());
+		    ns.setProperty(destinationNode, PDFToolkitModel.PROP_SIGNEDBY, AuthenticationUtil.getRunAsUser());
+			
+
         }
         catch (IOException e)
         {
