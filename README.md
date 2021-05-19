@@ -46,3 +46,4 @@ AGPL License.
 iText - Affero GPL 3 (http://itextpdf.com/terms-of-use/agpl.php)
 
 
+# alfresco-cloud-sign
