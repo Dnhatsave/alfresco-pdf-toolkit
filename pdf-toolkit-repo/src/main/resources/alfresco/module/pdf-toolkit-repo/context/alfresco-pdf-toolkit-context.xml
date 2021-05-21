@@ -26,30 +26,7 @@
             </list>
         </property>
 	</bean>
-	
-	<!-- pdfsplit -->
-	<bean id="pdf-split"
-		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFSplitActionExecuter"
-		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
-	</bean>
 
-	<!-- pdfappend -->
-	<bean id="pdf-append"
-		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFAppendActionExecuter"
-		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
-	</bean>
-
-	<!-- pdfsplitatapge -->
-	<bean id="pdf-split-at-page"
-		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFSplitAtPageActionExecuter"
-		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
-	</bean>
-	
-	<!-- pdfinsertatapge -->
-	<bean id="pdf-insert-at-page"
-		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFInsertAtPageActionExecuter"
-		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
-	</bean>
 
 	<!-- pdfwatermark -->
 	<bean id="pdf-watermark"
@@ -75,59 +52,4 @@
 		</property> -->
 	</bean>
 	
-	<!-- pdfencryption -->
-	<bean id="pdf-encryption"
-		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFEncryptionActionExecuter"
-		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
-		<property name="encryptionLevelConstraint">
-			<ref bean="pdfc-encryptionlevel" />
-		</property>
-	</bean>
-	
-	<!-- pdfdecryption -->
-	<bean id="pdf-decryption"
-		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFDecryptionActionExecuter"
-		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
-	</bean>
-	
-	<!-- pdfsignature -->
-	<bean id="pdf-signature"
-		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFSignatureActionExecuter"
-		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
-		<property name="visibilityConstraint">
-			<ref bean="pdfc-visibility"/>
-		</property>
-		<property name="keyTypeConstraint">
-			<ref bean="pdfc-keytype"/>
-		</property>
-		<property name="positionConstraint">
-			<ref bean="pdfc-position"/>
-		</property>
-		<property name="pageConstraint">
-			<ref bean="pdfc-page"/>
-		</property>
-	</bean>
-	
-	<!-- pdfdelete -->
-	<bean id="pdf-delete-page"
-		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFDeletePageActionExecuter"
-		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
-	</bean>
-   
-   <!-- pdfextract -->
-	<bean id="pdf-extract-page"
-		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFExtractPageActionExecuter"
-		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
-	</bean>
-	
-   <!-- pdfdelete -->
-	<bean id="pdf-rotate"
-		class="org.alfresco.extension.pdftoolkit.repo.action.executer.PDFRotateActionExecuter"
-		parent="org.alfresco.extension.pdf-toolkit-action" depends-on="pdftoolkit-messages">
-	</bean>
-	
-	<!-- Page count web script -->
-    <bean id="webscript.org.alfresco.extension.pdftoolkit.pagecount.get" class="org.alfresco.extension.pdftoolkit.webscripts.GetPageCount" parent="webscript">
-		<property name="serviceRegistry" ref="ServiceRegistry"/>
-	</bean>
 </beans>

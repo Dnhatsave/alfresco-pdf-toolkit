@@ -15,7 +15,8 @@ import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 
-import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfDocument;
 
 public class GetPageCount extends DeclarativeWebScript 
 {
@@ -33,9 +34,11 @@ public class GetPageCount extends DeclarativeWebScript
 		{
 			ContentReader reader = serviceRegistry
 					.getContentService().getReader(new NodeRef(nodeRef), ContentModel.PROP_CONTENT);
-			PdfReader pdfReader = new PdfReader(reader.getContentInputStream());
-			count = pdfReader.getNumberOfPages();
-			pdfReader.close();			
+			
+			PdfDocument pdfDoc = new PdfDocument(new PdfReader(reader.getContentInputStream()));
+
+			count = pdfDoc.getNumberOfPages();
+			pdfDoc.close();			
 		}
 		catch(IOException ioex)
 		{

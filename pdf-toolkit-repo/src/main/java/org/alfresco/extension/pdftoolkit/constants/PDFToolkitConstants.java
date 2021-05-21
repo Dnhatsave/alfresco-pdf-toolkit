@@ -1,6 +1,6 @@
 package org.alfresco.extension.pdftoolkit.constants;
 
-import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.kernel.font.PdfFont;
 
 public abstract class PDFToolkitConstants 
 {
@@ -66,9 +66,6 @@ public abstract class PDFToolkitConstants
     public static final String TYPE_IMAGE               			= "image";
     public static final String TYPE_TEXT                			= "text";
 
-    public static final String FONT_OPTION_HELVETICA    			= BaseFont.HELVETICA;
-    public static final String FONT_OPTION_COURIER      			= BaseFont.COURIER;
-    public static final String FONT_OPTION_TIMES_ROMAN  			= BaseFont.TIMES_ROMAN;
 
     public static final float PAD                      				= 15;
     

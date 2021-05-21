@@ -23,18 +23,29 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.alfresco.extension.pdftoolkit.constants.PDFToolkitConstants;
+import org.alfresco.extension.pdftoolkit.service.PDFToolkitService;
+
+
+import org.alfresco.repo.action.executer.ActionExecuterAbstractBase;
+
 import org.alfresco.extension.pdftoolkit.constraints.MapConstraint;
 import org.alfresco.repo.action.ParameterDefinitionImpl;
 import org.alfresco.service.cmr.action.Action;
 import org.alfresco.service.cmr.action.ParameterDefinition;
 import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.ServiceRegistry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class PDFWatermarkActionExecuter extends BasePDFStampActionExecuter
+public class PDFWatermarkActionExecuter extends ActionExecuterAbstractBase
 {
+
+    protected PDFToolkitService					pdfToolkitService;
+    protected ServiceRegistry     				serviceRegistry;
+
+
     /**
      * The logger
      */
@@ -46,6 +57,27 @@ public class PDFWatermarkActionExecuter extends BasePDFStampActionExecuter
     public static final String            NAME                     = "pdf-watermark";
 
  
+    /**
+     * Add parameter definitions
+     */
+    @Override
+    protected void addParameterDefinitions(List<ParameterDefinition> paramList)
+    {
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_INPLACE, DataTypeDefinition.BOOLEAN, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_INPLACE), false));
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_CREATE_NEW, DataTypeDefinition.BOOLEAN, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_CREATE_NEW), false));
+    }
+
+
+    public void setPDFToolkitService(PDFToolkitService pdfToolkitService)
+    {
+    	this.pdfToolkitService = pdfToolkitService;
+    }
+
+   
+    public void setServiceRegistry(ServiceRegistry serviceRegistry)
+    {
+        this.serviceRegistry = serviceRegistry;
+    }
 
     /**
      * @see org.alfresco.repo.action.executer.ActionExecuterAbstractBase#executeImpl(org.alfresco.service.cmr.repository.NodeRef,
