@@ -59,7 +59,9 @@ import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.pdf.layer.PdfLayer; 
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.property.TextAlignment;
 
@@ -96,6 +98,16 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 	{
 
 		NodeRef destinationNode = null;
+        // TODO pegar a senha do campo e comparar com o valor da BD
+
+        // String keyPassword = (String)params.get(PARAM_KEY_PASSWORD);
+
+        // // get pin from database
+        // String Model_URI = "http://www.alfresco.com/model/pdftoolkit/1.";
+        // String PROP_SIGNATUREPIN = "signaturepin";
+
+        // String pin = QName.createQName(Model_URI, PROP_SIGNATUREPIN).toString();
+
 		
         try
         {
@@ -346,7 +358,9 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
             // Certificar o writer
             PdfDocument pdfDoc = new PdfDocument(new PdfReader(actionedUponContentReader.getContentInputStream()),
                                  new PdfWriter(file));
-
+                                 
+            PdfLayer signatureUrl  = new PdfLayer("signatureUrl", pdfDoc);
+            PdfLayer signatureDate = new PdfLayer("signatureDate", pdfDoc);
             // get the PDF pages and position
             // String pages = (String)options.get(PARAM_PAGE);
             // String position = (String)options.get(PARAM_POSITION);
@@ -355,32 +369,13 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
             // int locationY = getInteger(options.get(PARAM_LOCATION_Y));
             Boolean inplace = true;
 
-            // // create the base font for the text stamp
-            // BaseFont bf = BaseFont.createFont((String)options.get(PARAM_WATERMARK_FONT), BaseFont.CP1250, BaseFont.EMBEDDED);
-
-            // // get watermark text and process template with model
-            // String templateText = (String)options.get(PARAM_WATERMARK_TEXT);
-            // Map<String, Object> model = buildWatermarkTemplateModel(targetNodeRef);
-            // StringWriter watermarkWriter = new StringWriter();
-            // freemarkerProcessor.processString(templateText, model, watermarkWriter);
-            // watermarkText = watermarkWriter.getBuffer().toString();
-
-            // // tokenize watermark text to support multiple lines and copy tokens
-            // // to vector for re-use
-            // st = new StringTokenizer(watermarkText, "\r\n", false);
-            // while (st.hasMoreTokens())
-            // {
-            //     tokens.add(st.nextToken());
-            // }
-
-            // stamp each page
-            //int numpages = reader.getNumberOfPages();
-            float x, y;
-
+            float x, y; 
+                          
             for (int i = 1; i <= pdfDoc.getNumberOfPages(); i++)
             {
                 //Rectangle pageSize = reader.getPageSizeWithRotation(i); iText 5
                 Rectangle pageSize = pdfDoc.getPage(i).getPageSize();
+
 
                 // getting the canvas covering the existing content
                 //canvas = stamp.getOverContent(i); iText 5
@@ -395,13 +390,37 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
                 //     new Phrase("validar: http://localhost:8080/sgd/page/site/testes/document-details"),
                 //     x - 34, y, 90); 
                 ////////////////// iText 5 //////////////////////////////////////////
-               
-                // Adding sme line on right side
-                drawText(canvas, pdfDoc, pageSize, pageSize.getRight() - 18,
-                (pageSize.getTop() + pageSize.getBottom()) / 2, 90);
 
-                drawDate(canvas, pdfDoc, pageSize, pageSize.getRight() - 1,
-                (pageSize.getTop() + pageSize.getBottom()) / 2, 90);
+                // Verificar se existe assinatura e atualizar
+                List<PdfLayer> layers = pdfDoc.getCatalog().getOCProperties(true).getLayers();
+                for (PdfLayer layer : layers) {
+                    if ("signatureUrl".equals(layer.getPdfObject().get(PdfName.Name).toString()) || 
+                        "signatureDate".equals(layer.getPdfObject().get(PdfName.Name).toString())  ) {
+                        layer.setOn(false);
+                        canvas.beginLayer(signatureUrl);
+                        // Adding sme line on right side
+                        drawText(canvas, pdfDoc, pageSize, pageSize.getRight() - 18,
+                        (pageSize.getTop() + pageSize.getBottom()) / 2, 90);
+                        canvas.endLayer();
+
+                        canvas.beginLayer(signatureDate);
+                        drawDate(canvas, pdfDoc, pageSize, pageSize.getRight() - 1,
+                        (pageSize.getTop() + pageSize.getBottom()) / 2, 90); 
+                        canvas.endLayer();   
+                        break;
+                    }else{
+                        // Adding sme line on right side
+                        canvas.beginLayer(signatureUrl);
+                        drawText(canvas, pdfDoc, pageSize, pageSize.getRight() - 18,
+                        (pageSize.getTop() + pageSize.getBottom()) / 2, 90);
+                        canvas.endLayer();
+
+                        canvas.beginLayer(signatureDate);
+                        drawDate(canvas, pdfDoc, pageSize, pageSize.getRight() - 1,
+                        (pageSize.getTop() + pageSize.getBottom()) / 2, 90); 
+                        canvas.endLayer();
+                    }
+                }               
             }
 
             pdfDoc.close();
@@ -472,11 +491,11 @@ public class PDFToolkitServiceImpl extends PDFToolkitConstants implements PDFToo
 
     private void drawText(PdfCanvas canvas, PdfDocument pdfDoc, Rectangle pageSize, float x, float y, double rotation) {
         Canvas canvasDrawText = new Canvas(canvas, pageSize)
-                .showTextAligned("Documento assinado electronicamente https://www.sgd.gov.mz/validarDocumento?=test.pdf",
+                .showTextAligned("Documento Assinado Digitalmente, para validar aceda o Portal https://www.cedsif.gov.mz",
                         x, y, TextAlignment.CENTER, (float) Math.toRadians(rotation));
         canvasDrawText.close();
     }  
-    private void drawDate(PdfCanvas canvas, PdfDocument pdfDoc, Rectangle pageSize, float x, float y, double rotation) {
+    private void drawDate(PdfCanvas canvas, PdfDocument pdfDoc, Rectangle pageSize, float x, float y, double rotation) {  
         Canvas canvasDrawText = new Canvas(canvas, pageSize)
                 .showTextAligned("Assinado por: " + AuthenticationUtil.getRunAsUser() + " aos " + new java.util.Date() ,
                         x, y, TextAlignment.CENTER, (float) Math.toRadians(rotation));

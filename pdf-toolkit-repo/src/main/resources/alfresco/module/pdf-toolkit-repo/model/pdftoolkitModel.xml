@@ -43,6 +43,7 @@
                     <title>Pin</title>
                     <type>d:text</type>
                 </property>
+                
             </properties>
         </aspect>
         

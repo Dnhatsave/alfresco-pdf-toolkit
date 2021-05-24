@@ -186,56 +186,9 @@
 			
 		Simply having an empty field in the appearance section seems to fix the issue (Community 4.2c)
      -->
-	<config evaluator="string-compare" condition="pdf-encryption">
-    	<forms>
-        	<form>
-        		<field-visibility>
-        			<show id="inplace"/>
-        			<show id="destination-name"/>
-        			<show id="destination-folder"/>
-        			<show id="user-password"/>
-        			<show id="owner-password"/>
-        			<show id="allow-print"/>
-        			<show id="allow-copy"/>
-        			<show id="allow-content-modification"/>
-        			<show id="allow-annotation-modification"/>
-        			<show id="allow-form-fill"/>
-        			<show id="allow-screen-reader"/>
-        			<show id="allow-degraded-print"/>
-        			<show id="allow-assembly"/>
-        			<show id="exclude-metadata"/>
-        			<show id="encryption-level"/>
-        		</field-visibility>
-                <appearance>
-                	<field id="inplace">
-                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
-                        </control>
-                	</field>
-                </appearance>
-            </form>
-        </forms>
-    </config>
+	
     
-    <config evaluator="string-compare" condition="pdf-decryption">
-    	<forms>
-        	<form>
-        		<field-visibility>
-        			<show id="inplace"/>
-        			<show id="destination-name"/>
-        			<show id="destination-folder"/>
-        			<show id="owner-password"/>
-        		</field-visibility>
-                <appearance>
-                	<field id="inplace">
-                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
-                        </control>
-                	</field>
-                </appearance>
-            </form>
-        </forms>
-    </config>
+ 
     
 	<config evaluator="string-compare" condition="pdf-signature">
     	<forms>
@@ -285,183 +238,24 @@
             </form>
         </forms>
     </config>
-<!--     
+    
 	<config evaluator="string-compare" condition="pdf-watermark">
     	<forms>
         	<form>
         		<field-visibility>
-        			<show id="inplace"/>
-        			<show id="destination-name"/>
-        			<show id="destination-folder"/>
-        			<show id="watermark-depth"/>
-        			<show id="watermark-type"/>
-        			<show id="watermark-image"/>
-        			<show id="watermark-text"/>
-        			<show id="watermark-font"/>
-        			<show id="watermark-size"/>
-        			<show id="page"/>
-        			<show id="position"/>
-        			<show id="location-x"/>
-        			<show id="location-y"/>
+        			<show id="key-password"/>
         		</field-visibility>
-                <appearance>
-                	<field id="inplace">
-                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
-                        </control>
-                	</field>
-                    <field id="page">
-                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
-                        	<control-param name="showPageScheme">true</control-param>
-                        	<control-param name="allowMultiPageSelect">true</control-param>
-                        </control>
-                    </field>
-                    <field id="position">
-                        <control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
-                    		<control-param name="showSelectValues">manual:prop_location-x,prop_location-y</control-param>
-                    	</control>
-                    </field>
-                    <field id="watermark-type">
-                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/dependentSelect.ftl">
-                    		<control-param name="showSelectValues">text:prop_watermark-text,prop_watermark-font,prop_watermark-size;image:assoc_watermark-image-cntrl</control-param>
-                    	</control>
-                    </field>
-                </appearance>
+				<appearance>
+					<field id="key-password" label-id="Pin">
+						<control template="/org/alfresco/components/form/controls/textfield.ftl">
+						</control>
+					</field>
+			   </appearance>
             </form>
         </forms>
-    </config> -->
+    </config> 
    
-	<config evaluator="string-compare" condition="pdf-insert-at-page">
-    	<forms>
-        	<form>
-        		<field-visibility>
-        		    <show id="inplace"/>
-        			<show id="destination-name"/>
-        			<show id="destination-folder"/>
-        			<show id="insert-content"/>
-        			<show id="page"/>
-        		</field-visibility>
-                <appearance>
-                	<field id="inplace">
-                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
-                        </control>
-                	</field>
-                	<field id="page">
-                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
-                        	<control-param name="showPageScheme">false</control-param>
-                        	<control-param name="allowMultiPageSelect">false</control-param>
-                        </control>
-                    </field>
-                </appearance>
-            </form>
-        </forms>
-    </config>
-    
-    <config evaluator="string-compare" condition="pdf-delete-page">
-    	<forms>
-        	<form>
-        		<field-visibility>
-        		    <show id="inplace"/>
-        			<show id="destination-name"/>
-        			<show id="destination-folder"/>
-        			<show id="page"/>
-        		</field-visibility>
-                <appearance>
-                	<field id="inplace">
-                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
-                        </control>
-                	</field>
-                	<field id="page">
-                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
-                        	<control-param name="showPageScheme">true</control-param>
-                        	<control-param name="allowMultiPageSelect">true</control-param>
-                        </control>
-                    </field>
-                </appearance>
-            </form>
-        </forms>
-    </config>
-    
-    <config evaluator="string-compare" condition="pdf-extract-page">
-    	<forms>
-        	<form>
-        		<field-visibility>
-        			<show id="destination-name"/>
-        			<show id="destination-folder"/>
-        			<show id="page"/>
-        		</field-visibility>
-                <appearance>
-                	<field id="page">
-                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
-                        	<control-param name="showPageScheme">true</control-param>
-                        	<control-param name="allowMultiPageSelect">true</control-param>
-                        </control>
-                    </field>
-                </appearance>
-            </form>
-        </forms>
-    </config>
-    
-	<config evaluator="string-compare" condition="pdf-split">
-    	<forms>
-        	<form>
-            	<field-visibility>
-            		<show id="destination-folder"/>
-            		<show id="split-frequency"/>
-                </field-visibility>
-                <appearance>
-                </appearance>
-            </form>
-        </forms>
-    </config>
-    
-	<config evaluator="string-compare" condition="pdf-split-at-page">
-    	<forms>
-        	<form>
-            	<field-visibility>
-            		<show id="destination-folder"/>
-            		<show id="page"/>
-                </field-visibility>
-                <appearance>
-                	<field id="page">
-                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
-                        	<control-param name="showPageScheme">false</control-param>
-                        	<control-param name="allowMultiPageSelect">false</control-param>
-                        </control>
-                    </field>
-                </appearance>
-            </form>
-        </forms>
-    </config>
-
-	<config evaluator="string-compare" condition="pdf-rotate">
-    	<forms>
-        	<form>
-        		<field-visibility>
-        			<show id="inplace"/>
-        			<show id="destination-name"/>
-        			<show id="destination-folder"/>
-        			<show id="degrees"/>
-        			<show id="page"/>
-        		</field-visibility>
-                <appearance>
-                	<field id="inplace">
-                		<control template="/org/alfresco/pdftoolkit/components/form/controls/hidingCheckbox.ftl">
-                        	<control-param name="hideProperties">assoc_destination-folder-cntrl,prop_destination-name</control-param>    
-                        </control>
-                	</field>
-                	<field id="page">
-                    	<control template="/org/alfresco/pdftoolkit/components/form/controls/selectPage.ftl" >
-                        	<control-param name="showPageScheme">true</control-param>
-                        	<control-param name="allowMultiPageSelect">true</control-param>
-                        </control>
-                    </field>
-                </appearance>
-            </form>
-        </forms>
-    </config>
+	
 
 	<config evaluator="string-compare" condition="WebFramework">
 		<web-framework>

@@ -65,6 +65,10 @@ public class PDFWatermarkActionExecuter extends ActionExecuterAbstractBase
     {
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_INPLACE, DataTypeDefinition.BOOLEAN, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_INPLACE), false));
         paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_CREATE_NEW, DataTypeDefinition.BOOLEAN, false, getParamDisplayLabel(PDFToolkitConstants.PARAM_CREATE_NEW), false));
+        // formulario
+        paramList.add(new ParameterDefinitionImpl(PDFToolkitConstants.PARAM_KEY_PASSWORD, DataTypeDefinition.TEXT, true, getParamDisplayLabel(PDFToolkitConstants.PARAM_KEY_PASSWORD)));
+
+
     }
 
 
